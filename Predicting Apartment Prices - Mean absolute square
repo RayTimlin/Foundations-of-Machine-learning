@@ -1,0 +1,32 @@
+import numpy as np
+from sklearn.neighbors import KNeighborsRegressor
+
+from section2 import load_apartment_data
+
+def mae(prediction, target):
+    """
+    Compute MAE between prediction and target vectors
+
+    prediction: (n_y,) shaped vector of real-valued predictions
+    target: (n_y,) shaped vector of real-valued targets
+
+    returns: the MAE as a single number
+    """
+
+    return np.mean(np.abs(prediction-target))
+
+X_train, y_train, X_val, y_val = load_apartment_data()
+# X_train has shape (200, 2,)
+# X_val has shape (100, 2,)
+# y_train has shape (200,)
+# y_val has shape (100,)
+
+k = 3 # We start by choosing k=3
+
+knn_model = KNeighborsRegressor(n_neighbors=k)
+
+knn_model.fit(X_train, y_train)
+prediction = knn_model.predict(X_val)
+val_mae = mae(prediction, y_val)
+
+print("Validation MAE: {:.6}".format(val_mae))
