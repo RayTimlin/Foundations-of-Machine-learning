@@ -1,0 +1,26 @@
+def calculate_accuracy(X_train, y_train, X_test, y_test, k):
+    """Calculate accuracy
+    X_train: (n_train, n_attributes) data matrix (n_train num training
+        observations, n_attributes num features)
+    y_train: (n_train,) target vector
+    X_test: (n_test, n_attributes) (n_test num test observations)
+    y_test: (n_test,)
+    k: number of neighbours to use for prediction
+
+    returns: accuracy over the data in X_test
+    """
+    predictions = []
+
+    # Loop over all observations
+    for i in range(X_test.shape[0]):
+        # Save prediction for observation in list
+        predictions.append(predict(X_train, y_train, X_test[i, :], k=k))
+
+    predictions = np.array(predictions)
+
+    acc = np.mean(predictions == y_test)
+    return acc
+
+k = 25
+accuracy = calculate_accuracy(X_train, y_train, X_test, y_test, k)
+print("Accuracy of the model is {}.".format(accuracy))
