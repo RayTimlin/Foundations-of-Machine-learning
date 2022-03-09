@@ -1,0 +1,25 @@
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.metrics import mean_absolute_error as mae
+from sklearn.preprocessing import MinMaxScaler
+
+X_train, y_train, X_val, y_val = load_apartment_data()
+
+k = 3
+knn_model = KNeighborsRegressor(n_neighbors=k)
+
+knn_model = KNeighborsRegressor(n_neighbors=k)
+
+scaler=MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_val = scaler.transform(X_val)
+
+
+# TODO: Fit model, compute predictions and validation MAE
+knn_model.fit(X_train, y_train)
+prediction = knn_model.predict(X_val)
+val_mae = mae(prediction, y_val)
+
+prediction = ___
+
+
+print("Validation MAE after normalization: {:.6}".format(val_mae))
