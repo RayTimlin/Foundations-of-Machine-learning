@@ -1,0 +1,77 @@
+
+import numpy as np
+from section2 import load_bat_data
+
+def dist(a, b):
+    sum = 0
+    for ai, bi in zip(a, b):
+        sum = sum + (ai - bi)**2
+    return np.sqrt(sum)
+ 
+
+
+def euclidian_distance(a, b):
+    return np.sqrt(np.sum((a-b)**2, axis=1))
+
+
+def predict(X_train, y_train, X_new, k):
+    """Make k-NN prediction for one new data point
+    X_train: (n_train, n_attributes) data matrix (n_train num observations,
+                n_attributes num features)
+    y_train: (n_train,) target vector
+    X_new: (1, n_attributes) data point
+    k: Number of neighbours to use for prediction
+
+    returns: k-NN prediction for X_new using k neighbours
+    """
+    num_classes = 3
+    
+    #print(X_train.shape)
+    #print (X_new)
+    
+    # TODO: Compute euclidean distances between the test point X_new and all
+    # training data points, euclidean_distance should be an (n_train,) vector
+    # with distances, where the i:th element is the distance between X_new
+    # and the i:th training data point.
+    # distance function
+    
+    euclidean_distance= [euclidian_distance(train_item, X_new) for train_item in X_train]
+    euclidean_distance =np.array(euclidean_distance)
+    # print (euclidean_distance)
+
+    # Sort the data points so that they are in the order of increasing
+    # euclidean distance. We then choose the k first indices (corresponding
+    # to the indices of the k nearest neighbours)
+    nearest_neighbours = euclidean_distance.argsort(axis=0)[:k]
+    #print (nearest_neighbours)
+
+    # Find the class labels of the nearest neighbours
+    neighbour_labels = y_train[nearest_neighbours]
+    #print (neighbour_labels.shape)
+    
+    neighbour_labels = neighbour_labels.ravel()
+    #print (neighbour_labels.shape)
+    # Count the number of occurrences of each class among the neighbours
+    class_count = np.bincount(neighbour_labels)
+    #print (class_count)
+
+    # Finally, take the majority vote (i.e. the largest bin from the bincount)
+    prediction = class_count.argmax()
+
+    return prediction
+
+# Load bat dataset
+X_train, y_train, X_test, y_test = load_bat_data()
+
+# The newly observed bat
+X_new = np.array([[10.3, 44.5]])
+
+# TODO: Fill in value of k
+k = 25
+
+# The predict function will return a numerical value where 0="Accuminate",
+# 1="Blasius's", 2="Guineau"
+prediction = predict(X_train, y_train, X_new, k)
+
+classes = ["Accuminate", "Blasius's", "Guineau"]
+print("The newly observed bat is a {} horseshoe bat.".format(classes[prediction]))
