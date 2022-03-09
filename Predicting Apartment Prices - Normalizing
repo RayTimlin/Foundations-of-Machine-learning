@@ -1,0 +1,25 @@
+from sklearn.preprocessing import MinMaxScaler
+
+def normalize(X_train, X_val):
+    """
+    Normalize features in training and validation data
+
+    X_train: (n_train, n_features) shaped matrix containing training data
+    X_val: (n_val, n_features) shaped matrix containing validation data
+
+    returns: the same matrices with normalized values
+    """
+
+    scaler = MinMaxScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_val = scaler.transform(X_val)
+
+    return X_train, X_val
+
+
+X_train, y_train, X_val, y_val = load_apartment_data()
+print("train_x data min: {}, max: {}".format(X_train.min(axis=0), X_train.max(axis=0)))
+print("val_x data min: {}, max: {}".format(X_val.min(axis=0), X_val.max(axis=0)))
+X_train, X_val = normalize(X_train, X_val)
+print("train_x data min: {}, max: {}".format(X_train.min(axis=0), X_train.max(axis=0)))
+print("val_x data min: {}, max: {}".format(X_val.min(axis=0), X_val.max(axis=0)))
