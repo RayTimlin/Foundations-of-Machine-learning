@@ -1,0 +1,35 @@
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_absolute_error as mae
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import KNeighborsRegressor
+from section2 import load_apartment_data
+
+X_train, y_train, X_val, y_val = load_apartment_data()
+
+
+
+ks = list(range(1,21))
+maes = []
+for k in ks:
+    # TODO: Compute predictions and MAE using different values for k
+    knn_model = KNeighborsRegressor(n_neighbors=k)
+    scaler=MinMaxScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_val = scaler.transform(X_val)
+    knn_model.fit(X_train, y_train)
+    prediction = knn_model.predict(X_val)
+    val_mae = mae(prediction, y_val)
+
+# TODO: Fit model, compute predictions and validation MAE
+
+    maes.append(val_mae)
+    print("k={}, MAE={:.5}".format(k, val_mae))
+
+# Plot the MAE as dependent on k
+fig, ax = plt.subplots(figsize=(10,7))
+ax.plot(ks, maes)
+ax.set_xticks(ks)
+ax.set_xlabel("k")
+ax.set_ylabel("MAE")
+ax.set_title("Parameter k vs MAE")
+fig.patch.set_facecolor('white')
