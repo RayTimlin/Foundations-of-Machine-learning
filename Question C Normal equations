@@ -1,0 +1,65 @@
+
+
+
+import numpy as np
+from section3 import load_california_data
+
+X_train, y_train, X_test, y_test = load_california_data()
+
+
+# For the sake of discussion, the dimensions of
+#C are shape (1000,1000) and d is shape (1,1000).
+
+# Extend features with constant 1 in first position
+X_train = np.concatenate([np.ones((X_train.shape[0],1)), X_train], axis=1)
+X_test = np.concatenate([np.ones((X_test.shape[0],1)), X_test], axis=1)
+
+XT = np.transpose(X_train)
+
+XTX=XT.dot(X_train)
+
+inv=np.linalg.inv(XTX)
+
+inv_XT=inv.dot(XT)
+
+theta=inv_XT.dot(y_train)
+print (theta)
+
+print(X_train.shape)
+print(XT.shape)
+print(XTX.shape)
+print(X_test.shape)
+print(y_train.size)
+print(y_train.shape)
+print(X_train.ndim)
+#print(X_test.dtype)
+#print(X_test.nbytes)
+
+#b = np.transpose(np.array([[-3,5,-2]])
+
+
+#x = np.linalg.solve(A,b)
+
+# TODO: Compute optimal parameters theta_hat using normal equations
+theta_hat = theta
+
+print("The learned parameters are: {}".format(theta_hat))
+
+
+Course solution
+
+
+
+import numpy as np
+from section3 import load_california_data
+
+X_train, y_train, X_test, y_test = load_california_data()
+
+# Extend features with constant 1 in first position
+X_train = np.concatenate([np.ones((X_train.shape[0],1)), X_train], axis=1)
+X_test = np.concatenate([np.ones((X_test.shape[0],1)), X_test], axis=1)
+
+# Compute optimal parameters theta_hat using normal equations
+theta_hat = np.linalg.solve(X_train.transpose()@X_train, X_train.transpose()@y_train)
+
+print("The learned parameters are: {}".format(theta_hat))
