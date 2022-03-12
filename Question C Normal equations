@@ -33,6 +33,17 @@ print(y_train.size)
 print(y_train.shape)
 print(X_train.ndim)
 #print(X_test.dtype)
+
+
+
+QUESTION D - Prediction
+
+x_prime = X_train[2589] # Bakersfield block group
+
+# Perform prediction for x_prime
+prediction = theta_hat@x_prime
+
+print("The model predicts {} (* 100 000 dollars)".format(prediction))
 #print(X_test.nbytes)
 
 #b = np.transpose(np.array([[-3,5,-2]])
