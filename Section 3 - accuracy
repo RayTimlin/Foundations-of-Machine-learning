@@ -1,0 +1,12 @@
+# TODO: Calculate model accuracy over test data
+
+print(y_test)
+
+prediction = model.predict(X_test)
+score = model.score(X_test, y_test)
+
+print(score)
+
+acc = score
+
+print("The test accuracy of the model is {:0.3f}.".format(acc))
