@@ -19,3 +19,28 @@ theta = np.column_stack((model.intercept_, model.coef_))
 print("Parameters for class 1 (Adélie): {}".format(theta[0,:]))
 print("Parameters for class 2 (Chinstrap): {}".format(theta[1,:]))
 print("Parameters for class 3 (Gentoo): {}".format(theta[2,:]))
+
+
+'---------------------------------------------------
+
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from section3 import load_penguin_data
+
+X_train, y_train, X_test, y_test, _ = load_penguin_data()
+
+# Initiate model and fit to training data
+# We will use the default values for all inputs except for the "max_iter" input (we increase the maximum number of
+# iterations so that the algorithm will have time to converge)
+
+# Replace missing entries with the training data
+model = LogisticRegression(max_iter=300).fit(X_train, y_train)
+
+# The following will print the model parameters
+np.set_printoptions(precision=3, suppress=True)
+# The intercept parameters (all theta_{m,0}, m=1,...,M) are stored separately
+# in model.intercept_, so here we create a single matrix with all parameters
+theta = np.column_stack((model.intercept_, model.coef_))
+print("Parameters for class 1 (Adélie): {}".format(theta[0,:]))
+print("Parameters for class 2 (Chinstrap): {}".format(theta[1,:]))
+print("Parameters for class 3 (Gentoo): {}".format(theta[2,:]))
