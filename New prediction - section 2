@@ -1,0 +1,35 @@
+
+
+la_location = np.array([34.06, -118.25]) # Coordinates for central LA 
+
+print(x_prime)
+array= x_prime[:-2]
+
+x_la = np.append(array, la_location)
+#print (x_la)
+prediction = x_la@theta_hat
+print(prediction)
+
+# TODO: Modify x_prime to be located in LA and perform prediction
+x_la = np.append(array, la_location)
+prediction = prediction = x_la@theta_hat
+
+print("For LA, the model predicts {} (* 100 000 dollars)".format(prediction))
+
+
+
+la_location = np.array([34.06, -118.25]) # Coordinates for central LA 
+
+# Modify x_prime to be located in LA and perform prediction
+x_la = np.concatenate((x_prime[:-2], la_location))
+prediction = theta_hat@x_la
+
+print("For LA, the model predicts {} (* 100 000 dollars)".format(prediction))
+
+
+
+
+
+
+
+
