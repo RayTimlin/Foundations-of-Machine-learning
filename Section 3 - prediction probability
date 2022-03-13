@@ -1,0 +1,14 @@
+import numpy as np
+
+# You can use this code block for computations
+
+print(X_test.shape)
+penguin = np.array([[45.2,3701,220]])
+
+print(penguin.shape)
+
+prediction = model.predict(penguin)
+print(prediction)
+
+probability = model.predict_proba(penguin)
+print(np.amax(probability))
