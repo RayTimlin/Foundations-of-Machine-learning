@@ -1,0 +1,48 @@
+import numpy as np
+from sklearn.preprocessing import PolynomialFeatures
+from section4 import load_classification_data, load_classification_models
+
+X_train, y_train, X_test, y_test = load_classification_data()
+model_1, model_2, model_3 = load_classification_models()
+
+def misclassification_rate(X, y, model):
+    """ Calculate error of model on given data
+    X: (n, p) data array
+    y: (n,) true class labels
+    model: model to use for prediction
+
+    returns: misclassification rate of model
+    """
+
+    y_hat = model.predict(X)
+
+    # TODO: Calculate missclassification rate with predictions
+    # y_hat and true labels y
+    error = ___
+
+    return error
+
+print(model_1)
+print(model_2)
+print(model_3)
+
+print(X_train.shape)
+print(y_train.shape)
+print(X_test.shape)
+print(y_test.shape)
+
+# Model 1
+E_train_1 = misclassification_rate(X_train, y_train, model_1) # Calculate error
+print("The training error of model 1 is {:0.3f}.".format(E_train_1))
+
+# Model 2
+poly_2 = PolynomialFeatures(degree=2, include_bias=False)
+X_train_2d = poly_2.fit_transform(X_train) # Expand input data
+E_train_2 = misclassification_rate(X_train_2d, y_train, model_2) # Calculate error
+print("The training error of model 2 is {:0.3f}.".format(E_train_2))
+
+# Model 3
+poly_4 = PolynomialFeatures(degree=4, include_bias=False)
+X_train_4d = poly_4.fit_transform(X_train) # Expand input data
+E_train_3 = misclassification_rate(X_train_4d, y_train, model_3) # Calculate error
+print("The training error of model 3 is {:0.3f}.".format(E_train_3))
