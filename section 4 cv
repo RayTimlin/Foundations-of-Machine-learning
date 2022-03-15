@@ -1,6 +1,7 @@
 import numpy as np
 # TODO: Uncomment one of the following lines of code, 
 # depending of which model you choose in the previous question
+from sklearn.metrics import mean_squared_error
 
 from section4 import load_diabetes_data
 
@@ -8,6 +9,7 @@ X_train, y_train, X_test, y_test = load_diabetes_data()
 print (X_train.shape)
 print (y_train.shape)
 print (X_test.shape)
+print (y_test.shape)
 
 X_combined = np.r_[X_train, X_test]
 y_combined = np.r_[y_train, y_test]
@@ -22,16 +24,17 @@ mse = - neg_mse
 print(mse)
 mse=mse.mean()
 
+#y_test = np.array(y_test)
+#y_test = y_test.reshape(-1, 1)
+
+y_hat_test = model.predict(X_test)
+y_hat_true = y_test
+#print (y_hat_test)
+#print (y_hat_true)
+
+y = mean_squared_error(y_hat_test, y_hat_true, squared=True)
+print(y)
+
 # TODO: Calculate mean squared error over test data
-mse = mse
+mse = y
 print("Mean squared error of model on test data: {:0.2f}".format(mse))
-
-
-
-    92     assert isinstance(model, linear_model.LinearRegression), "Did you select the model with the smallest estimated expected new data error?"
-     93     assert arrayEqual(y_hat_true_calc, y_hat_true, precision=1e-5), "This is not correct. Did you fit the model to the training data?"
----> 94     assert arrayEqual(y_hat_true, y_hat_test, precision=1e-5), "The predictions are not correct."
-     95 
-     96     mse_true = 3006.331018
-
-NameError: name 'y_hat_test' is not defined
