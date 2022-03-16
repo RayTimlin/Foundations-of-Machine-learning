@@ -1,0 +1,78 @@
+Section 5 - part 1
+
+Counting parameters - 31
+Hidden unit - 8.9
+Neural network - 75.4
+
+
+import numpy as np
+from sklearn.neural_network import MLPRegressor
+import matplotlib.pyplot as plt
+from section5 import load_concrete_data
+
+def mse(prediction, target):
+    """
+    Compute MSE between prediction and target vectors
+
+    prediction: (n_y,) shaped vector of real-valued predictions
+    target: (n_y,) shaped vector of real-valued targets
+	
+    returns: the MSE as a single number
+    """
+    return np.mean(np.power((prediction-target), 2))
+
+def plot_loss_curve(model):
+    """
+    Plot the loss curve of a trained neural network model and print the final loss value.
+
+    model: a trained scikit-learn neural network model, i.e. MLPRegressor
+    """
+    # Scikit-learn uses 0.5*MSE as loss, so multiply by 2 to get MSE
+    losses = 2.*np.array(model.loss_curve_)
+    steps = np.arange(losses.shape[0])
+
+    fig, ax = plt.subplots(1,1, figsize=(15,7))
+    ax.plot(steps, losses)
+    ax.set_xlabel("Step", fontsize=15)
+    ax.set_ylabel("Loss", fontsize=15)
+    ax.set_title("Training Loss Curve", fontsize=25)
+    print("Finished at training loss: {:.4}".format(losses[-1]))
+
+X_train, y_train, X_val, y_val, X_test, y_test = load_concrete_data()
+
+# TODO: Create neural network model
+model = MLPRegressor(hidden_layer_sizes=(3,), max_iter=3000, solver='adam',learning_rate_init=0.005, batch_size=128)
+
+# TODO: Train the model on the training set of the data (use the fit method)
+model.fit(X_train,y_train)
+
+# Plot loss curve
+plot_loss_curve(model)
+
+
+val_prediction = model.predict(X_val)
+val_mse = mse(val_prediction, y_val)
+print("Validation MSE={:.4}".format(val_mse)
+
+
+X_train, y_train, X_val, y_val, X_test, y_test = load_concrete_data()
+
+# TODO: Create new, larger neural network model
+model = MLPRegressor(hidden_layer_sizes=(512,512,512), max_iter=3000, solver='adam',learning_rate_init=0.005, batch_size=128)
+
+
+# TODO: Train the model on the training set of the data (use the fit method)
+model.fit(X_train,y_train)
+
+# Plot loss curve
+plot_loss_curve(model)
+
+# Evaluate model
+val_prediction = model.predict(X_val)
+val_mse = mse(val_prediction, y_val)
+print("Validation MSE={:.4}".format(val_mse))
+
+
+test_prediction = model.predict(X_test)
+test_mse = mse(test_prediction, y_test)
+print("Test MSE={:.4}".format(test_mse))
