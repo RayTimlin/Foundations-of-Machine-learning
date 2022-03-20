@@ -1,0 +1,14 @@
+from sklearn.decomposition import PCA
+from section6 import load_labeled_mnist_data, visualize_data
+
+X_train, y_train, X_test, y_test = load_labeled_mnist_data()
+
+# TODO: Perform PCA on both train and test sets
+pca = PCA(n_components=2, random_state=0)
+X_train_reduced = pca.fit_transform(X_train) 
+X_test_reduced = pca.transform(X_test)
+
+print("Variance explained by PCs: {}".format(pca.explained_variance_ratio_))
+
+# Have a look at the training data
+visualize_data(X_train_reduced, y_train)
